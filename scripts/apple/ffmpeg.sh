@@ -144,9 +144,13 @@ for library in {0..61}; do
       CONFIGURE_POSTFIX+=" --enable-gmp"
       ;;
     gnutls)
-      FFMPEG_CFLAGS+=" $(pkg-config --cflags gnutls 2>>"${BASEDIR}"/build.log)"
-      FFMPEG_LDFLAGS+=" $(pkg-config --libs --static gnutls 2>>"${BASEDIR}"/build.log)"
-      CONFIGURE_POSTFIX+=" --enable-gnutls"
+      if [[ ${ENABLED_LIBRARIES[${LIBRARY_OPENSSL}]} -eq 1 ]]; then
+        echo -e "INFO: Skipping gnutls because openssl is enabled\n" 1>>"${BASEDIR}"/build.log 2>&1
+      else
+        FFMPEG_CFLAGS+=" $(pkg-config --cflags gnutls 2>>"${BASEDIR}"/build.log)"
+        FFMPEG_LDFLAGS+=" $(pkg-config --libs --static gnutls 2>>"${BASEDIR}"/build.log)"
+        CONFIGURE_POSTFIX+=" --enable-gnutls"
+      fi
       ;;
     kvazaar)
       FFMPEG_CFLAGS+=" $(pkg-config --cflags kvazaar 2>>"${BASEDIR}"/build.log)"

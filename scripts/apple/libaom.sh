@@ -12,14 +12,9 @@ arm*)
 i386)
   ASM_OPTIONS="-DARCH_X86=1 -DENABLE_SSE=0 -DHAVE_SSE=0 -DENABLE_SSE3=0 -DHAVE_SSE3=0"
   ;;
-x86-64*)
-  ASM_OPTIONS="-DARCH_X86_64=0 -DENABLE_SSE=0 -DENABLE_SSE2=0 -DENABLE_SSE3=0 -DENABLE_SSE4_1=0 -DENABLE_SSE4_2=0 -DENABLE_MMX=0"
-
-  # WORKAROUND TO DISABLE ASM
-  ${SED_INLINE} 's/define aom_clear_system_state() aom_reset_mmx_state()/define   aom_clear_system_state()/g' ${BASEDIR}/src/${LIB_NAME}/aom_ports/system_state.h
-  ${SED_INLINE} 's/ add_asm_library("aom_ports/#add_asm_library("aom_ports/g' ${BASEDIR}/src/${LIB_NAME}/aom_ports/aom_ports.cmake
-  ${SED_INLINE} 's/ target_sources(aom_ports/#target_sources(aom_ports/g' ${BASEDIR}/src/${LIB_NAME}/aom_ports/aom_ports.cmake
-  ;;
+  x86-64*)
+    ASM_OPTIONS="-DAOM_TARGET_CPU=generic"
+    ;;
 esac
 
 mkdir -p "${BUILD_DIR}" || return 1

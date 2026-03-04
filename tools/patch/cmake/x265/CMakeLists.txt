@@ -1,4 +1,5 @@
 # vim: syntax=cmake
+cmake_minimum_required (VERSION 3.5) # Updated for cmake 4.x compatibility
 if(NOT CMAKE_BUILD_TYPE)
     # default to Release build for GCC builds
     set(CMAKE_BUILD_TYPE Release CACHE STRING
@@ -7,17 +8,16 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 message(STATUS "cmake version ${CMAKE_VERSION}")
 if(POLICY CMP0025)
-    cmake_policy(SET CMP0025 OLD) # report Apple's Clang as just Clang
+    cmake_policy(SET CMP0025 NEW) # report Apple's Clang as AppleClang
 endif()
 if(POLICY CMP0042)
     cmake_policy(SET CMP0042 NEW) # MACOSX_RPATH
 endif()
 if(POLICY CMP0054)
-    cmake_policy(SET CMP0054 OLD) # Only interpret if() arguments as variables or keywords when unquoted
+    cmake_policy(SET CMP0054 NEW) # Only interpret if() arguments as variables or keywords when unquoted
 endif()
 
 project (x265)
-cmake_minimum_required (VERSION 2.8.8) # OBJECT libraries require 2.8.8
 include(CheckIncludeFiles)
 include(CheckFunctionExists)
 include(CheckSymbolExists)
@@ -350,14 +350,14 @@ endif(GCC)
 
 find_package(Nasm)
 if(ARM OR CROSS_COMPILE_ARM)
-    option(ENABLE_ASSEMBLY "Enable use of assembly coded primitives" ON)
+    option(ENABLE_ASSEMBLY "Enable use of assembly coded primitives" OFF)
 elseif(NASM_FOUND AND X86)
     if (NASM_VERSION_STRING VERSION_LESS "2.13.0")
         message(STATUS "Nasm version ${NASM_VERSION_STRING} is too old. 2.13.0 or later required")
         option(ENABLE_ASSEMBLY "Enable use of assembly coded primitives" OFF)
     else()
         message(STATUS "Found Nasm ${NASM_VERSION_STRING} to build assembly primitives")
-        option(ENABLE_ASSEMBLY "Enable use of assembly coded primitives" ON)
+        option(ENABLE_ASSEMBLY "Enable use of assembly coded primitives" OFF)
     endif()
 else()
     option(ENABLE_ASSEMBLY "Enable use of assembly coded primitives" OFF)

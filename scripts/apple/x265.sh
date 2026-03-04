@@ -48,6 +48,12 @@ ${SED_INLINE} 's/\.text/.equ g_lumaFilter, .-g_lumaFilter_bytes\
 # WORKAROUND TO USE A CUSTOM BUILD FILE
 overwrite_file "${BASEDIR}"/tools/patch/cmake/x265/CMakeLists.txt "${BASEDIR}"/src/"${LIB_NAME}"/source/CMakeLists.txt || return 1
 
+# FORCE DISABLE INTRINSICS ON macOS x86_64 TO FIX FFMPEG LINKING
+${SED_INLINE} 's/#define HAVE_SSE3/\/\/#define HAVE_SSE3/g' ${BASEDIR}/src/${LIB_NAME}/source/common/vec/vec-primitives.cpp
+${SED_INLINE} 's/#define HAVE_SSSE3/\/\/#define HAVE_SSSE3/g' ${BASEDIR}/src/${LIB_NAME}/source/common/vec/vec-primitives.cpp
+${SED_INLINE} 's/#define HAVE_SSE4/\/\/#define HAVE_SSE4/g' ${BASEDIR}/src/${LIB_NAME}/source/common/vec/vec-primitives.cpp
+${SED_INLINE} 's/#define HAVE_AVX2/\/\/#define HAVE_AVX2/g' ${BASEDIR}/src/${LIB_NAME}/source/common/vec/vec-primitives.cpp
+
 cmake -Wno-dev \
   -DCMAKE_VERBOSE_MAKEFILE=0 \
   -DCMAKE_C_FLAGS="${CFLAGS}" \
