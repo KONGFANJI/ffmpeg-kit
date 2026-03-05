@@ -3,11 +3,8 @@
 # FFmpeg Kit macOS Automated Publisher
 # This script zips frameworks, pushes a tag, and uploads to GitHub Releases.
 
-# Change to the project root directory before executing
-cd "$(dirname "$0")/.." || exit 1
-
 VERSION="6.0.3"
-ZIP_NAME="pod_release/ffmpeg-kit-macos-xcframeworks.zip"
+ZIP_NAME="ffmpeg-kit-macos-xcframeworks.zip"
 FRAMEWORKS_DIR="prebuilt/bundle-apple-xcframework-macos"
 TAG_NAME="v$VERSION"
 

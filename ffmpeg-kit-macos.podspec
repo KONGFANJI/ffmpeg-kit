@@ -11,7 +11,7 @@ Pod::Spec.new do |spec|
   spec.author       = { "KONGFANJI" => "kongfanji@example.com" } # Adjust email if necessary
   
   # The source is where CocoaPods will download the zip file that was uploaded to the GitHub Release.
-  spec.source       = { :http => "https://github.com/KONGFANJI/ffmpeg-kit/releases/download/v#{spec.version}/pod_release/ffmpeg-kit-macos-xcframeworks.zip" }
+  spec.source       = { :http => "https://github.com/KONGFANJI/ffmpeg-kit/releases/download/v#{spec.version}/ffmpeg-kit-macos-xcframeworks.zip" }
 
   spec.platform     = :osx, "10.15"
 

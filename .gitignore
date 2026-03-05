@@ -3,4 +3,4 @@
 /prebuilt/
 .DS_Store
 .idea
-pod_release/*.zip
+ffmpeg-kit-macos-xcframeworks.zip
